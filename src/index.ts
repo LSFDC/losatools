@@ -12,6 +12,7 @@ async function main() {
   const resourcesPath = "";
   const configPath = "";
   const outputDir = "./output/";
+  const xmlFilePath = ""; //find uiimageset.xml path
 
   //dds parser
   console.log("Parsing DDS file...");
@@ -22,7 +23,6 @@ async function main() {
 
   //uixmlparser + convert image to separated png
   console.log("Parsing UI XML file and extracting images...");
-  const xmlFilePath = "uiimageset.xml";
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);
