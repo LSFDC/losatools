@@ -7,6 +7,7 @@ import {
   ConvertServerIDToAddress,
   ConvertToGameServerID,
 } from "./core/serverid-generator";
+import { DecryptPassword, EncryptPassword } from "./core/ioppass-generator";
 
 /**
  * Main function that runs the dds parser, uixmlparser, image downloader, and ini-loader.
@@ -110,6 +111,24 @@ async function main() {
   console.log(`Server ID: ${serverId}`);
   console.log(`Server IP & Port: ${ip}:${port}`);
   console.log("Generating server ID completed.");
+
+  //iop password generator
+  console.log("Generating iop password...");
+  //Encrypt Process
+  let resultEncrypt = "";
+  const password = "iosuccess#@";
+
+  //@ts-ignore
+  resultEncrypt = EncryptPassword(password);
+  console.log(`IOP Password: ${resultEncrypt}`);
+
+  //Decrypt Process
+  const decryptedPassword = resultEncrypt; // or use exist encrypted password put as string (example: "-86, 53, 59, 108, 105, 17, 42, -12, 44, 65, 111, 66, 108, -114, 10, 77, 110, 58, 43, 123") expect to be : T*$f40FRjfoe*(fl304d
+  let resultDecrypt = "";
+
+  //@ts-ignore
+  resultDecrypt = DecryptPassword(decryptedPassword);
+  console.log(`Decrypted IOP Password: ${resultDecrypt}`);
 }
 
 main().catch((err) => console.error(err));
