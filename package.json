@@ -3,8 +3,7 @@
   "version": "1.0.5",
   "main": "index.js",
   "scripts": {
-    "all": "ts-node src/index.ts",
-    "conspinner": "ts-node src/core/console-spinner.ts"
+    "all": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "Bangbokir",
