@@ -25,7 +25,7 @@
 - Clone this repository
 - Open the clone repository witih your IDE (vscode/cursor/etc.)
 - Edit `const resourcesPath = "";` `const configPath = "";`
-  `const outputDir = "./output/";` on `src/index.ts`
+  `const outputDir = "./output/";` `const xmlFilePath = "";` on `src/index.ts`
 - Run `npm install` to install dependencies
 - Run `npm run all` to run main function.
 
