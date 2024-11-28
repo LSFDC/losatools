@@ -1,6 +1,16 @@
 const MAX_PASSWORD = 20;
 let result: number[] = [];
 
+/**
+ * Encrypts or decrypts a buffer using a predefined key. The key is
+ * chosen based on the value of the bPassword parameter.
+ *
+ * @param szResultData - The buffer to which the result is written.
+ * @param iResultSize - The size of the result buffer.
+ * @param szSourceData - The source buffer to be encrypted or decrypted.
+ * @param iSourceSize - The size of the source buffer.
+ * @param bPassword - If true, the first key is used. If false, the second key is used.
+ */
 export default function EncryptDecryptData(
   szResultData: Buffer,
   iResultSize: number,
@@ -38,6 +48,13 @@ export default function EncryptDecryptData(
   }
 }
 
+/**
+ * Encrypts the given password string using the same algorithm as the game's
+ * EncryptPassWord function.
+ *
+ * @param szPassword - The password string to be encrypted.
+ * @returns The encrypted password as a comma-separated string of numbers.
+ */
 export function EncryptPassword(szPassword: string) {
   result = [];
   let szPass = szPassword;
@@ -56,6 +73,12 @@ export function EncryptPassword(szPassword: string) {
   return result.join(",");
 }
 
+/**
+ * Decrypts a password string that was previously encrypted with EncryptPassword.
+ *
+ * @param szResult - The encrypted password string to be decrypted.
+ * @returns The decrypted password as a string.
+ */
 export function DecryptPassword(szResult: string): string {
   const result = szResult.split(",").map((x) => parseInt(x, 10));
   const szEncPassWord = Buffer.from(result);

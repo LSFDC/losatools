@@ -2,10 +2,8 @@ import * as fs from "fs";
 import * as path from "path";
 import sharp from "sharp";
 import { XMLParser } from "fast-xml-parser";
-import { exec } from "child_process";
-import util from "util";
-
-const execPromise = util.promisify(exec);
+import { WriteLog } from "../lib/logger";
+import { convertDdsToPng } from "../lib/imgmagick";
 
 interface Image {
   Name: string;
@@ -25,30 +23,6 @@ interface Imageset {
 
 interface ImagesetLayout {
   Imageset: Imageset[];
-}
-
-/**
- * Writes a message to a log file.
- *
- * @param message The message to be written to the log file.
- * @param filename The name of the log file to be written to.
- *
- * The log message will be prefixed with the current date and time in ISO format.
- * If the log directory does not exist, it will be created.
- * The log file will be created if it does not exist, or appended to if it does.
- */
-function WriteLog(message: string, filename: string) {
-  const logDirPath = "./log";
-  const logFilePath = path.join(logDirPath, filename);
-
-  if (!fs.existsSync(logDirPath)) {
-    fs.mkdirSync(logDirPath, { recursive: true });
-  }
-
-  const timestamp = new Date().toISOString();
-  const logMessage = `[${timestamp}] ${message}\n`;
-
-  fs.appendFileSync(logFilePath, logMessage, "utf8");
 }
 
 /**
@@ -119,36 +93,6 @@ export function parseXml(filePath: string): ImagesetLayout {
   WriteLog("Final Imageset Layout: " + imagesetLayout, "./xml.log");
 
   return imagesetLayout;
-}
-
-/**
- * Converts a DDS file to a PNG file using ImageMagick.
- *
- * @param inputFile - The path to the input DDS file.
- * @param outputFile - The path to the output PNG file.
- *
- * This function executes the ImageMagick command `magick convert` to convert the
- * input file to a PNG. If the command executes successfully, a log message is
- * written. If the command fails, a log message is written and the error is
- * re-thrown.
- */
-async function convertDdsToPng(
-  inputFile: string,
-  outputFile: string
-): Promise<void> {
-  try {
-    const command = `magick convert "${inputFile}" "${outputFile}"`;
-
-    WriteLog("Executing command: " + command, "./debug.log");
-
-    await execPromise(command);
-
-    WriteLog(`Converted: ${inputFile} to ${outputFile}`, "./debug.log");
-  } catch (error) {
-    WriteLog(`Failed to convert ${inputFile}:`, "./error.log");
-
-    throw error;
-  }
 }
 
 /**

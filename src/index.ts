@@ -8,7 +8,7 @@ import {
   ConvertToGameServerID,
 } from "./core/serverid-generator";
 import { DecryptPassword, EncryptPassword } from "./core/ioppass-generator";
-import { LSCtoDDS } from "./core/lsctodds";
+import { LSCtoDDSAndPNG } from "./core/lsc-converter";
 
 /**
  * Main function that runs the dds parser, uixmlparser, image downloader, and ini-loader.
@@ -134,8 +134,8 @@ async function main() {
   console.log("Generating iop password completed.");
 
   //lsc to DDS
-  console.log("Converting LSC to DDS...");
-  LSCtoDDS(""); //path to lsc files (example: D:\\LostSaga\\Korea\\KR\\LostSaga\\resource\\texture)
+  console.log("Converting LSC to DDS And PNG...");
+  LSCtoDDSAndPNG(""); //path to lsc files (example: D:\\LostSaga\\Korea\\KR\\LostSaga\\resource\\texture)
   console.log("Converting LSC to DDS completed.");
 }
 
