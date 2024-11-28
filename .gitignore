@@ -1,0 +1,7 @@
+node_modules/
+output/
+output-images/
+package-lock.json
+
+*.env
+.env
