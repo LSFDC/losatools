@@ -8,7 +8,7 @@ import {
   ConvertToGameServerID,
 } from "./core/serverid-generator";
 import { DecryptPassword, EncryptPassword } from "./core/ioppass-generator";
-import { LSCtoDDSAndPNG } from "./core/lsctodds";
+import { LSCtoDDS } from "./core/lsctodds";
 
 /**
  * Main function that runs the dds parser, uixmlparser, image downloader, and ini-loader.
@@ -135,7 +135,7 @@ async function main() {
 
   //lsc to DDS
   console.log("Converting LSC to DDS...");
-  LSCtoDDSAndPNG(""); //path to lsc files (example: D:\\LostSaga\\Korea\\KR\\LostSaga\\resource\\texture)
+  LSCtoDDS(""); //path to lsc files (example: D:\\LostSaga\\Korea\\KR\\LostSaga\\resource\\texture)
   console.log("Converting LSC to DDS completed.");
 }
 

@@ -32,7 +32,7 @@ function TransformBytes(byteArray: Uint8Array): Uint8Array {
  *
  * Logs an error if no `.lsc` files are found or if processing fails.
  */
-export function LSCtoDDSAndPNG(directoryPath: string): void {
+export function LSCtoDDS(directoryPath: string): void {
   try {
     // Find `.lsc` files in the directory
     const match = /\.lsc$/i;
@@ -52,10 +52,6 @@ export function LSCtoDDSAndPNG(directoryPath: string): void {
     const outputFileNameDDS = inputFileName.replace(/\.lsc$/i, ".dds");
     const outputFilePathDDS = join(directoryPath, outputFileNameDDS);
 
-    //output to .png
-    const outputFileNamePNG = inputFileName.replace(/\.lsc$/i, ".png");
-    const outputFilePathPNG = join(directoryPath, outputFileNamePNG);
-
     const data = readFileSync(inputFilePath);
     const transformedBytes = TransformBytes(Uint8Array.from(data));
 
@@ -64,11 +60,6 @@ export function LSCtoDDSAndPNG(directoryPath: string): void {
     });
 
     console.log(`Written File: ${outputFilePathDDS}`);
-
-    writeFileSync(outputFilePathPNG, Buffer.from(transformedBytes), {
-      encoding: "binary",
-    });
-    console.log(`Written File: ${outputFilePathPNG}`);
   } catch (error) {
     console.error(
       `Error processing files in directory "${directoryPath}":`,
