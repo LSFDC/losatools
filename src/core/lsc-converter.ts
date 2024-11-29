@@ -28,7 +28,7 @@ function TransformBytes(byteArray: Uint8Array): Uint8Array {
 }
 
 /**
- * Converts `.lsc` files in the specified directory to both `.dds` and `.png` formats.
+ * Converts all`.lsc` files in the specified directory to both `.dds` and `.png` formats.
  *
  * This function searches for `.lsc` files within the given directory, processes
  * the first file it finds, transforms its bytes using a specified transformation,
@@ -50,28 +50,29 @@ export function LSCtoDDSAndPNG(directoryPath: string): void {
     }
 
     // Process the `.lsc` file
-    const inputFileName = files[0];
-    const inputFilePath = join(directoryPath, inputFileName);
-    console.log(`Processed File: ${inputFileName}`);
+    files.forEach((inputFileName) => {
+      const inputFilePath = join(directoryPath, inputFileName);
+      console.log(`Processing File: ${inputFileName}`);
 
-    //output to .dds
-    const outputFileNameDDS = inputFileName.replace(/\.lsc$/i, ".dds");
-    const outputFilePathDDS = join(directoryPath, outputFileNameDDS);
+      // Output to .dds
+      const outputFileNameDDS = inputFileName.replace(/\.lsc$/i, ".dds");
+      const outputFilePathDDS = join(directoryPath, outputFileNameDDS);
 
-    const data = readFileSync(inputFilePath);
-    const transformedBytes = TransformBytes(Uint8Array.from(data));
+      const data = readFileSync(inputFilePath);
+      const transformedBytes = TransformBytes(Uint8Array.from(data));
 
-    writeFileSync(outputFilePathDDS, Buffer.from(transformedBytes), {
-      encoding: "binary",
+      writeFileSync(outputFilePathDDS, Buffer.from(transformedBytes), {
+        encoding: "binary",
+      });
+
+      console.log(`Written DDS File: ${outputFilePathDDS}`);
+
+      // Output to .png
+      const outputPngPath = outputFilePathDDS.replace(/\.dds$/i, ".png");
+      convertDdsToPng(outputFilePathDDS, outputPngPath);
+
+      console.log(`Written PNG File: ${outputPngPath}`);
     });
-
-    console.log(`Written File: ${outputFilePathDDS}`);
-
-    //output to .png
-    const outputPngPath = outputFilePathDDS.replace(/\.dds$/i, ".png");
-    convertDdsToPng(outputFilePathDDS, outputPngPath);
-
-    console.log(`Written File: ${outputPngPath}`);
   } catch (error) {
     console.error(
       `Error processing files in directory "${directoryPath}":`,
